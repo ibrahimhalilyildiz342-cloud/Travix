@@ -367,3 +367,44 @@ body::after {
         max-height: 600px;
     }
 }
+
+/* Leaflet Routing Machine Dark Mode Overrides */
+.leaflet-routing-container {
+    background-color: rgba(20, 20, 25, 0.9) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid var(--glass-border) !important;
+    color: var(--text-main) !important;
+    border-radius: 12px !important;
+}
+
+.leaflet-routing-alt {
+    background: transparent !important;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.leaflet-routing-alt h2, .leaflet-routing-alt h3 {
+    color: var(--accent-color) !important;
+}
+
+.leaflet-routing-alt table {
+    color: var(--text-muted) !important;
+}
+
+.leaflet-routing-alt tr:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.leaflet-routing-icon {
+    filter: invert(1);
+}
+
+.marker-tooltip {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    text-shadow: 1px 1px 2px black;
+}

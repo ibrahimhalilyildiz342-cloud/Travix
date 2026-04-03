@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let map = null;
     let markers = [];
+    let routeLine = null;
 
     // Dinamik kurgusal açıklamalar havuzu (API'den dönen başlıkları süslemek için)
     const descPool = [
@@ -37,10 +38,15 @@ document.addEventListener('DOMContentLoaded', () => {
     function clearMap() {
         markers.forEach(m => map.removeLayer(m));
         markers = [];
+        if (routeLine) {
+            map.removeLayer(routeLine);
+            routeLine = null;
+        }
     }
 
     function renderTimeline(timelineData, dataCenter) {
         timelineContent.innerHTML = '';
+        const waypoints = [];
         
         timelineData.forEach((item, index) => {
             const timelineItem = document.createElement('div');
@@ -55,25 +61,38 @@ document.addEventListener('DOMContentLoaded', () => {
             timelineContent.appendChild(timelineItem);
 
             if(item.lat && item.lng) {
+                waypoints.push(L.latLng(item.lat, item.lng));
+                
                 const circleMarker = L.circleMarker([item.lat, item.lng], {
-                    radius: 8,
+                    radius: 12,
                     fillColor: "#fca311",
                     color: "#fff",
                     weight: 2,
                     opacity: 1,
-                    fillOpacity: 0.8
+                    fillOpacity: 0.9
                 }).addTo(map);
                 
-                circleMarker.bindPopup(`<b>${item.time}</b><br>${item.title}`);
+                // Add a number inside or near the marker for sequence
+                circleMarker.bindTooltip(`${index + 1}`, { permanent: true, direction: 'center', className: 'marker-tooltip' }).openTooltip();
+                
+                // Google Maps yönlendirmesi
+                const mapsLink = `https://www.google.com/maps/search/?api=1&query=${item.lat},${item.lng}`;
+                circleMarker.bindPopup(`<b>${item.time}</b><br>${item.title}<br><br><a href="${mapsLink}" target="_blank" style="color: #fca311; text-decoration: none; font-weight: bold;">📍 Google Haritalar'da Aç</a>`);
                 markers.push(circleMarker);
             }
         });
 
-        if(markers.length > 0) {
-            const group = new L.featureGroup(markers);
-            setTimeout(() => {
-                map.fitBounds(group.getBounds(), { padding: [50, 50] });
-            }, 500);
+        // Add Routing Line (Polyline)
+        if (waypoints.length > 1) {
+            routeLine = L.polyline(waypoints, {
+                color: '#b084f8', 
+                opacity: 0.8, 
+                weight: 5,
+                dashArray: '10, 10', // Kesik kesik modern çizgi
+                lineJoin: 'round'
+            }).addTo(map);
+            
+            map.fitBounds(routeLine.getBounds(), { padding: [50, 50] });
         } else if(dataCenter) {
             map.setView(dataCenter, 13);
         }
