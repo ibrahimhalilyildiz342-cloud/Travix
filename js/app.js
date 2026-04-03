@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function initMap() {
         if (!map) {
             map = L.map('map').setView([20.0, 0.0], 2);
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
                 attribution: '&copy; OSM contributors',
                 subdomains: 'abcd',
                 maxZoom: 19
@@ -183,5 +183,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if(e.key === 'Enter') {
             searchDestination();
         }
+    });
+
+    // Popüler vitrin kartlarına tıklama özelliği
+    const destCards = document.querySelectorAll('.dest-card');
+    destCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const cityName = card.getAttribute('data-city');
+            destinationInput.value = cityName;
+            searchDestination();
+            
+            // Sonuç alanına yumuşak kaydırma
+            setTimeout(() => {
+                document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        });
     });
 });

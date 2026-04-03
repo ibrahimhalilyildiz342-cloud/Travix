@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travix - AI Seyahat Planlayıcı</title>
+    <title>Travix - Seyahat Asistanı</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Leaflet Harita Kütüphanesi CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
@@ -18,51 +18,114 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="app-container">
-        <!-- Header & Search Area -->
-        <header class="search-section">
-            <h1 class="logo">Travix.<span>ai</span></h1>
-            <p class="subtitle">Yapay zeka ile saniyeler içinde mükemmel rotanızı oluşturun.</p>
+
+    <!-- Navbar Area -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="logo">Travix</h1>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Anasayfa</a></li>
+                <li><a href="#popular-dest">Rotalar</a></li>
+                <li><a href="#about">Biz Kimiz?</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Kapak Görseli ve Arama Alanı -->
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h2 class="hero-title">Sıradaki Maceranı Keşfet</h2>
+            <p class="hero-subtitle">Dünyanın dört bir yanındaki şehirler için yapay zeka destekli saniyelik rota planlayıcısı.</p>
             
             <div class="search-box">
-                <input type="text" id="destination-input" placeholder="Örn: Bangkok, Paris veya Kapadokya..." autocomplete="off">
+                <input type="text" id="destination-input" placeholder="Örn: Kapadokya, Roma, Phuket..." autocomplete="off">
                 <button id="plan-btn">
-                    <span class="btn-text">Rotayı Planla</span>
+                    <span class="btn-text">Rotayı Bul</span>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                 </button>
             </div>
-        </header>
-
-        <!-- Yükleniyor Göstergesi -->
-        <div id="loader-overlay" class="hidden">
-            <div class="loader-content">
-                <div class="spinner"></div>
-                <p>Yapay Zeka rotanızı tasarlıyor...</p>
-            </div>
         </div>
+    </section>
 
-        <!-- Ana İçerik: Harita ve Plan -->
-        <main id="result-section" class="hidden">
-            <!-- Sol Taraf: Harita -->
-            <div class="map-container">
-                <div id="map"></div>
-                <div class="map-overlay-title" id="map-title">
-                    <!-- Dinamik başlık gelecek -->
+    <!-- Popüler Vitrin (Gezi Blogu Stili) -->
+    <section class="popular-section" id="popular-dest">
+        <div class="container">
+            <div class="section-header">
+                <h2>En Gözde Rotalar</h2>
+                <p>Kullanıcılarımızın en çok arattığı ve ilham aldığı popüler destinasyonlar.</p>
+            </div>
+            <div class="grid-gallery">
+                <!-- Data-city ile tek tıkla arama tetikleniyor -->
+                <div class="dest-card" data-city="Kapadokya">
+                    <img src="https://images.unsplash.com/photo-1641128324972-afef93ffcc14?q=80&w=800&auto=format&fit=crop" alt="Kapadokya">
+                    <div class="card-info">
+                        <h3>Kapadokya</h3>
+                        <span>Türkiye</span>
+                    </div>
+                </div>
+                <div class="dest-card" data-city="Paris">
+                    <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=800&auto=format&fit=crop" alt="Paris">
+                    <div class="card-info">
+                        <h3>Paris</h3>
+                        <span>Fransa</span>
+                    </div>
+                </div>
+                <div class="dest-card" data-city="Roma">
+                    <img src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=800&auto=format&fit=crop" alt="Roma">
+                    <div class="card-info">
+                        <h3>Roma</h3>
+                        <span>İtalya</span>
+                    </div>
+                </div>
+                <div class="dest-card" data-city="Tokyo">
+                    <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=800&auto=format&fit=crop" alt="Tokyo">
+                    <div class="card-info">
+                        <h3>Tokyo</h3>
+                        <span>Japonya</span>
+                    </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- Sağ Taraf: Yolculuk Planı (Zaman Çizelgesi) -->
-            <div class="timeline-container glass-panel">
+    <!-- Biz Kimiz Section -->
+    <section class="about-section" id="about">
+        <div class="container about-grid">
+            <div class="about-text">
+                <h2>Biz Kimiz?</h2>
+                <p>Yeni yerler keşfetmeye, farklı kültürleri deneyimlemeye ve anılar biriktirmeye aşık ruhlarız. Seyahat etmenin sadece bir yerden bir yere gitmek değil, bir yaşam felsefesi olduğuna inanıyoruz.</p>
+                <p>Amacımız sırt çantamızı alıp yollara düşerken edindiğimiz tecrübeleri, anlık rotaları ve gizli kalmış cennet köşelerini sizinle paylaşmak. Hazırsanız, bu büyük macerada yapay zeka destekli rotalarımızla bize katılın!</p>
+            </div>
+            <div class="about-images">
+                <img src="biz.jpg" alt="Bizim Maceramız" class="about-img img-single">
+            </div>
+        </div>
+    </section>
+    <!-- Harita ve Zaman Çizelgesi Alanı -->
+    <section id="result-section" class="result-section hidden">
+        <div class="container result-grid">
+            <div class="map-container shadow-box">
+                <div id="map"></div>
+                <div class="map-overlay-title" id="map-title"></div>
+            </div>
+
+            <div class="timeline-container shadow-box">
                 <div class="timeline-header">
                     <h2 id="plan-title">Plana Genel Bakış</h2>
                     <p id="plan-desc">Özetiniz hazırlanıyor...</p>
                 </div>
-                
-                <div class="timeline" id="timeline-content">
-                    <!-- Dinamik olarak JS tarafından doldurulacak -->
-                </div>
+                <div class="timeline" id="timeline-content"></div>
             </div>
-        </main>
+        </div>
+    </section>
+
+    <!-- Tam Ekran Değil, Şık Bir Loader -->
+    <div id="loader-overlay" class="hidden">
+        <div class="loader-content shadow-box">
+            <div class="spinner"></div>
+            <p>Harita ve rota çiziliyor...</p>
+        </div>
     </div>
 
     <!-- Leaflet Harita Kütüphanesi JS -->
